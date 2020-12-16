@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {useState} from 'react'
+function App(props) {
+  const counter = useSelector((state)=>{
+    return state;
+  });
+  const dispatch = useDispatch();
 
-function App() {
+  const [text, setText] = useState("")
+  
+  const handleChange = (event) => {
+    setText(event.target.value);
+  }
+  const handleAdd = () => {
+    dispatch({
+        type: 'add',
+        payload: text
+    })
+    setText("")
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+     Слово из стейта: {counter}  
     </div>
+    <div>
+    <input type="text" value={text} onChange={handleChange}/>
+    </div>
+    <div><button onClick={handleAdd}> add </button> </div>
+    <div><button onClick={()=>dispatch({type: 'reset'})}> reset </button> </div>
+    </div>
+    
   );
 }
 
